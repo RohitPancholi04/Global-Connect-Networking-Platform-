@@ -1,9 +1,8 @@
 const express = require('express');
 const protect = require('../middleware/authMiddleware');
-const multer = require('multer');
 const { createPost, getFeed, likePost, commentPost } = require('../controllers/postController');
 
-const upload = multer({ dest: 'uploads/' });
+const upload = require('../middleware/uploadMiddleware');
 const router = express.Router();
 
 router.post('/', protect, upload.single('image'), createPost);
