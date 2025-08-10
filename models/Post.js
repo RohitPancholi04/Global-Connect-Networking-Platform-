@@ -6,7 +6,7 @@ const postSchema = new mongoose.Schema({
     ref: "User",
     required: true
   },
-  text: {
+  content: {
     type: String,
     required: true
   },
@@ -39,4 +39,6 @@ const postSchema = new mongoose.Schema({
   ]
 }, { timestamps: true });
 
+
 module.exports = mongoose.model("Post", postSchema);
+

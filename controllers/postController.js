@@ -1,15 +1,22 @@
 const Post = require('../models/Post');
+const connectCloudinary = require('../config/cloudinary');
 
-exports.createPost = async (req, res) => {
+exports.createPost = async (req,res) => {
   try {
+    // const fun = await connectCloudinary.uploader
+    console.log(connectCloudinary());
+    
+    const imageUrl = req.file ? await connectCloudinary().uploader.upload(req.file.path) : "";
+    console.log(imageUrl);
     const newPost = await Post.create({
       user: req.user._id,
-      text: req.body.text,
-      image: req.file?.path || null
+      content: req.body.content,
+      image:imageUrl.url
     });
     res.status(201).json(newPost);
   } catch (error) {
     res.status(500).json({ message: error.message });
+    console.error("Error creating post:", error);
   }
 };
 
