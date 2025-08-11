@@ -22,6 +22,32 @@ exports.updateProfile = async (req, res) => {
   }
 };
 
+// Add education
+exports.addEducation = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id);
+    user.education.push(req.body);
+    await user.save();
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ error: "Server error" });
+  }
+};
+
+// Add experience
+exports.addExperience = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id);
+    user.experience.push(req.body);
+    await user.save();
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ error: "Server error" });
+  }
+};
+
+
+
 // Send connection request
 exports.sendConnectionRequest = async (req, res) => {
   try {

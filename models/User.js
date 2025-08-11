@@ -12,4 +12,21 @@ const userSchema = new mongoose.Schema({
   pendingRequests: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
 }, { timestamps: true });
 
+const educationSchema = new mongoose.Schema({
+  school: String,
+  degree: String,
+  fieldOfStudy: String,
+  startDate: Date,
+  endDate: Date,
+  description: String
+});
+
+
+
+
+
+
+
+
+
 module.exports = mongoose.model('User', userSchema);
