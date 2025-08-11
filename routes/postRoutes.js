@@ -1,9 +1,7 @@
 const express = require('express');
 const protect = require('../middleware/authMiddleware');
-const { createPost, getFeed, likePost, commentPost } = require('../controllers/postController');
-
 const Post = require("../models/Post");
-// const upload = require("../middleware/uploadMiddleware");
+const upload = require("../middleware/uploadMiddleware");
 const { createPost, getFeed, likePost, commentPost } = require('../controllers/postController');
 const auth = require("../middleware/authMiddleware.js");
 

@@ -20,13 +20,19 @@ const educationSchema = new mongoose.Schema({
   endDate: Date,
   description: String
 });
+const experienceSchema = new mongoose.Schema({
+  company: String,
+  position: String,
+  startDate: Date,
+  endDate: Date,
+  description: String
+});
 
 
 
 
 
 
-
-
-
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model('User', userSchema),
+ mongoose.model('Education', educationSchema),
+  mongoose.model('Experience', experienceSchema);
