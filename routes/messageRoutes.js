@@ -1,10 +1,13 @@
 const express = require('express');
 const protect = require('../middleware/authMiddleware');
-const { sendMessage, getMessages } = require('../controllers/messageController');
+const { sendMessage, getMessages, getUserForMessaging } = require('../controllers/messageController');
+const upload = require('../middleware/uploadMiddleware');
+
 
 const router = express.Router();
 
-router.post('/', protect, sendMessage);
+router.get("/user-profile",protect, getUserForMessaging);
+router.post('/', protect, upload.single("image"), sendMessage);
 router.get('/:userId', protect, getMessages);
 
 module.exports = router;
