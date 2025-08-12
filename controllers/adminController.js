@@ -21,8 +21,6 @@ const loginAdmin = async (req, res) => {
   }
 };
 
-
-
 // API to get all users list for admin panel
 const allUsers = async (req, res) => {
   try {

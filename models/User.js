@@ -29,10 +29,6 @@ const experienceSchema = new mongoose.Schema({
 });
 
 
-
-
-
-
 module.exports = mongoose.model('User', userSchema),
  mongoose.model('Education', educationSchema),
   mongoose.model('Experience', experienceSchema);

@@ -1,6 +1,6 @@
 const express = require('express');
 const authAdmin = require('../middleware/authAdmin.js');
-const {loginAdmin, allUsers, allPosts } = require('../controllers/adminController.js/index.js');
+ const {loginAdmin, allUsers, allPosts } = require('../controllers/adminController.js');
 
 const router = express.Router();
 
