@@ -50,14 +50,24 @@ exports.applyJob = async (req, res) => {
     const job = await Job.findById(req.params.id);
     if (!job) return res.status(404).json({ error: "Job not found" });
 
+    //Prevent duplicate applications
     if (job.applicants.includes(req.user._id)) {
       return res.status(400).json({ error: "Already applied" });
     }
+    // Prevent applying to own job
+    if (job.postedBy.toString() === req.user._id.toString()) {
+      return res.status(400).json({ error: "You can't apply to your own job" });
+    }
+
 
     job.applicants.push(req.user._id);
     await job.save();
 
-    res.json({ message: "Applied successfully" });
+    //   res.json({ message: "Applied successfully" });
+    // } catch (err) {
+    //   res.status(500).json({ error: err.message });
+    // }
+    res.status(200).json({ message: 'Applied successfully' });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

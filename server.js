@@ -1,8 +1,8 @@
 const express = require('express');
 const dotenv = require('dotenv');
-const cors = require('cors');
+// const cors = require('cors');
 const connectDB = require('./config/db');
-const { connect } = require('mongoose');
+const  connect  = require('mongoose');
 const connectCloudinary = require('./config/cloudinary');
 const { app,httpServer } = require('./config/socket');
 
@@ -11,8 +11,8 @@ connectDB();
 connectCloudinary();
 
 
-// const app = express();
-app.use(cors());
+//Middleware 
+// app.use(cors());
 app.use(express.json({ limit: "10mb" }));
 
 // Routes
