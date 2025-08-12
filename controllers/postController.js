@@ -1,6 +1,7 @@
 const Post = require('../models/Post');
 const connectCloudinary = require('../config/cloudinary');
-
+//
+const fs = require('fs');
 exports.createPost = async (req,res) => {
   try {
     // const fun = await connectCloudinary.uploader
