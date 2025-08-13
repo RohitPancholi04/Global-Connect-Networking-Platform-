@@ -1,8 +1,11 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom';
 import './Navbar2.css'
 import HomeIcon from '@mui/icons-material/Home';
 import ChatIcon from '@mui/icons-material/Chat';
 import PersonIcon from '@mui/icons-material/Person';
+import WorkIcon from '@mui/icons-material/Work';
+import WorkHistoryIcon from '@mui/icons-material/WorkHistory';
 import { useLocation } from 'react-router-dom';
 
 const Navbar2 = () => {
@@ -11,9 +14,9 @@ const Navbar2 = () => {
     return (
         <div className='bg-white h-13 flex justify-between py-1 px-5 xl:px-50 ficed top-0 w-[100%] z-1000'>
             <div className='flex gap-2 items-center'>
-                <div>
+                <Link to={'/Feeds'}>
                     <img src={'https://gncipl.online/wp-content/uploads/2025/08/logo.png'} className='w-12 h-12' alt='logo' />
-                </div>
+                </Link>
                 <div className='relative'>
                     <input className='searchInput w-70 bg-gray-100 rounded-sm h-10 px-4' placeholder='Search' />
 
@@ -30,20 +33,30 @@ const Navbar2 = () => {
             </div>
 
             <div className='hidden gap-10 md:flex'>
-                <div className='flex flex-col items-center cursor-pointer'>
+                <Link to={'/Home'} className='flex flex-col items-center cursor-pointer'>
                     <HomeIcon sx={{color:'grey'}} />
                     <div className='text-sm text-gray-500'>Home</div>
-                </div>
+                </Link>
 
-                <div className='flex flex-col items-center cursor-pointer'>
+                <Link to={'/Messages'} className='flex flex-col items-center cursor-pointer'>
                     <ChatIcon sx={{color:'grey'}}/>
                     <div className='text-sm text-gray-500'>Chatbox</div>
-                </div>
+                </Link>
 
-                <div className='flex flex-col items-center cursor-pointer'>
+                <Link to={'/Resume'} className='flex flex-col items-center cursor-pointer'>
+                    <WorkIcon sx={{color:'grey'}}/>
+                    <div className='text-sm text-gray-500'>Resume</div>
+                </Link>
+
+                <Link to={'/Jobs'} className='flex flex-col items-center cursor-pointer'>
+                    <WorkHistoryIcon sx={{color:'grey'}}/>
+                    <div className='text-sm text-gray-500'>Jobs</div>
+                </Link>
+
+                <Link to={'/Profile'} className='flex flex-col items-center cursor-pointer'>
                     <PersonIcon sx={{color:'grey'}}/>
                     <div className='text-sm text-gray-500'>My Profile</div>
-                </div>
+                </Link>
             </div>
         </div>
     )
