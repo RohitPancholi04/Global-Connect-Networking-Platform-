@@ -22,7 +22,7 @@ const Login = ({ setIsLogin }) => {
         localStorage.setItem("token", res.data.token);
         alert("Login successful!");
         setIsLogin(true);
-        navigate("/"); // Redirect to homepage or feeds
+        navigate("/Home"); // Redirect to homepage or feeds
       } else {
         alert("No token received. Please try again.");
       }

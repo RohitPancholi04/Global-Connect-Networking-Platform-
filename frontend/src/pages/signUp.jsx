@@ -23,7 +23,7 @@ function SignUp() {
     
       localStorage.setItem("token", res.data.token);
       alert("Signup successful!");
-      navigate("/"); 
+      navigate("/Home"); 
     } catch (err) {
   console.error("Signup error:", err.response?.data || err.message);
   alert(err.response?.data?.message || "Signup failed");

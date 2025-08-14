@@ -1,9 +1,10 @@
 import { useState } from 'react'
 import './App.css'
 import Navbar1 from './components/Navbar1'
-import LandingPage from './pages/LandingPage'
+import LandingPage1 from './pages/LandingPage1'
+import LandingPage2 from './pages/LandingPage2'
 import Footer from './components/Footer'
-import {Routes,Route,useNavigate} from 'react-router-dom'
+import {Routes,Route,useNavigate, Navigate} from 'react-router-dom'
 import Navbar2 from './components/Navbar2'
 import Feeds from './pages/Feeds'
 import SignUp from './pages/Signup'
@@ -12,6 +13,7 @@ import Profile from './pages/Profile'
 import Resume from './pages/Resume'
 import Messages from './pages/Messages'
 import JobsPage from './pages/JobsPage'
+import { useEffect } from 'react'
 
 function App() {
   const [isLogin, setIsLogin] = useState(false);
@@ -39,24 +41,28 @@ function App() {
 const handleLogout = () => {
     localStorage.removeItem("token");
     setIsLogin(false);
-    navigate("/login");
+    navigate("/");
   };
+
+
 
   return (
       <div className='bg-gray-100 w-[100%] h-[100%] box-border'>
         {isLogin ? <Navbar2  onLogout={handleLogout} /> :<Navbar1 />}
         <Routes>
             {!isLogin && <Route path="/signUp" element={<SignUp />} />}
-        {!isLogin && <Route path="/login" element={<Login  setIsLogin={setIsLogin}/>} />}
-       {isLogin && <Route path="/Feeds" element={<Feeds />} />}
-        <Route path='/' element={<LandingPage/>} /> 
+             {!isLogin && <Route path="/login" element={<Login  setIsLogin={setIsLogin}/>} />}
+
+              {!isLogin && <Route path='/' element={<LandingPage1 />} /> }
+               {isLogin && <Route path='/' element={<LandingPage2 />} /> }
   
-        <Route path='/Home' element={<Feeds/>}/>
+              {isLogin &&  <Route path='/Home' element={<Feeds/>}/> }
+               {isLogin && <Route path="/Feeds" element={<Feeds />} />}
       
-        <Route path='/Resume' element={<Resume/>}/>
-        <Route path='/Jobs' element={<JobsPage/>}/>
-        <Route path='/Messages' element={<Messages/>} />
-        <Route path='/Profile' element={<Profile/>} />
+        {isLogin && <Route path='/Resume' element={<Resume/>}/>}
+        {isLogin && <Route path='/Jobs' element={<JobsPage/>}/> }
+        {isLogin && <Route path='/Messages' element={<Messages/>} /> }
+        {isLogin && <Route path='/Profile' element={<Profile/>} /> }
 
          {/* Redirect */}
         <Route path="*" element={<Navigate to={isLogin ? "/" : "/login"} />} />

@@ -58,7 +58,13 @@ const Navbar2 = ({onLogout}) => {
                     <div className='text-sm text-gray-500'>My Profile</div>
                 </Link>
             </div>
-            <button onClick={onLogout}>Logout</button>
+            <button
+             onClick={onLogout}
+           className="bg-red-500 hover:bg-black-600 text-white font-semibold py-2 px-6 rounded-full shadow-md transition-all duration-300 ease-in-out transform hover:scale-105"
+            >
+           Logout
+           </button>
+
         </div>
     )
 }
