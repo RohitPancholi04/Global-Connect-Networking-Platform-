@@ -1,16 +1,27 @@
-const express = require('express');
-const protect = require('../middleware/authMiddleware');
-const Post = require("../models/Post");
-const upload = require("../middleware/uploadMiddleware");
-const { createPost, getFeed, likePost, commentPost } = require('../controllers/postController');
-// const auth = require("../middleware/authMiddleware.js");
 
-
+const express = require("express");
 const router = express.Router();
+const protect  = require("../middleware/authMiddleware.js");
+const upload = require("../middleware/uploadMiddleware"); // your multer config
 
-router.post('/', protect, upload.single('image'), createPost); 
-router.get('/feed', protect, getFeed);
-router.put('/:id/like', protect, likePost);
-router.post('/:id/comment', protect, commentPost);
+const {
+  createPost,
+  getFeed,
+  toggleLikePost,
+  addComment,
+  deleteComment,
+  deletePost,
+} = require("../controllers/postController.js");
+
+router.post("/", protect, upload.single("image"), createPost);
+router.get("/feed", protect, getFeed);
+
+router.put("/:postId/like", protect, toggleLikePost);
+
+router.post("/:postId/comment", protect, addComment);
+router.delete("/:postId/comment/:commentId", protect, deleteComment);
+
+router.delete("/:postId", protect, deletePost);
 
 module.exports = router;
+
