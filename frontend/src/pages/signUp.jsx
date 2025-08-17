@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import api from '../lib/axios';
+
+import API from '../lib/axios'; 
+// import axios from "axios";
 
 function SignUp() {
   const [email, setEmail] = useState("");
@@ -15,7 +17,7 @@ function SignUp() {
     }
 
     try {
-      const res = await api.post("/api/auth/register", { name, email, password });
+      const res = await API.post("/auth/register", { name, email, password });
 
        if (!res.data.token) {
       throw new Error("No token received from server");
