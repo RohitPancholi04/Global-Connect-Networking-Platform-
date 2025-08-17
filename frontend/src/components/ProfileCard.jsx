@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Card from "./Card";
-import api from "../lib/axios";
-import {jwtDecode} from "jwt-decode"; // npm install jwt-decode
+import API from "../lib/axios";
+import {jwtDecode} from "jwt-decode"; 
 
 const ProfileCard = () => {
   const [profile, setProfile] = useState(null);
@@ -16,9 +16,9 @@ const ProfileCard = () => {
 
       // Decode token to get userId
       const decoded = jwtDecode(token);
-      const userId = decoded.id; // matches your backend `jwt.sign({ id })`
+      const userId = decoded.id; 
 
-      const res = await api.get(`/api/users/${userId}`, {
+      const res = await API.get(`/users/${userId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

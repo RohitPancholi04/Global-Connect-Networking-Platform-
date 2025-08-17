@@ -36,9 +36,9 @@
 
 import  { useState } from "react";
 import InsertPhotoIcon from "@mui/icons-material/InsertPhoto";
-import api from "../lib/axios";
+import API from "../lib/axios"; 
 import { useEffect } from "react";
-import {jwtDecode} from "jwt-decode"; // npm install jwt-decode
+import {jwtDecode} from "jwt-decode"; 
 
 const AddModal = () => {
   const [profile, setProfile] = useState(null);
@@ -56,9 +56,9 @@ const AddModal = () => {
   
         // Decode token to get userId
         const decoded = jwtDecode(token);
-        const userId = decoded.id; // matches your backend `jwt.sign({ id })`
+        const userId = decoded.id; 
   
-        const res = await api.get(`/api/users/${userId}`, {
+        const res = await API.get(`/api/users/${userId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -102,10 +102,10 @@ const AddModal = () => {
         formData.append("image", imageFile);
       }
 
-      const token = localStorage.getItem("token"); // Assuming JWT stored here
+      const token = localStorage.getItem("token"); 
 
-      const res = await api.post(
-        "api/posts/", // Your API endpoint
+      const res = await API.post(
+        "api/posts/", 
         formData,
         {
           headers: {
