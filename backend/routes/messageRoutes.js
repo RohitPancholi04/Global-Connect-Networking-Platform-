@@ -11,3 +11,4 @@ router.post('/', protect, upload.single("image"), sendMessage);
 router.get('/:userId', protect, getMessages);
 
 module.exports = router;
+
