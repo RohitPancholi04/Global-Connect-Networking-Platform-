@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import api from "../lib/axios";
+import API from "../lib/axios"; 
+
+// import axios from "axios";
 
 const Login = ({ setIsLogin }) => {
   const navigate = useNavigate();
@@ -16,14 +18,14 @@ const Login = ({ setIsLogin }) => {
 
     setLoading(true);
     try {
-      const res = await api.post("/api/auth/login", { email, password });
+      const res = await API.post("/auth/login", { email, password });
 
       if (res.data.token) {
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("userData", res.data);
         alert("Login successful!");
         setIsLogin(true);
-        navigate("/Home"); // Redirect to homepage or feeds
+        navigate("/Home");
       } else {
         alert("No token received. Please try again.");
       }

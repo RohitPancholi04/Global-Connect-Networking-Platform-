@@ -1,8 +1,11 @@
 
 import { useEffect, useState } from "react";
 import InsertPhotoIcon from "@mui/icons-material/InsertPhoto";
+import { useEffect } from "react";
+import {jwtDecode} from "jwt-decode"; 
 import api from "../lib/axios";
 import { jwtDecode } from "jwt-decode";
+
 
 const AddModal = ({ onClose, onCreated }) => {
   const [profile, setProfile] = useState(null);
@@ -14,10 +17,26 @@ const AddModal = ({ onClose, onCreated }) => {
     (async () => {
       try {
         const token = localStorage.getItem("token");
+
+        if (!token) {
+          console.error("No token found");
+          return;
+        }
+  
+        // Decode token to get userId
+        const decoded = jwtDecode(token);
+        const userId = decoded.id; 
+  
+        const res = await API.get(`/api/users/${userId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+
         if (!token) return;
         const { id } = jwtDecode(token);
         const res = await api.get(`/api/users/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
+
         });
         setProfile(res.data);
       } catch (e) {
@@ -36,6 +55,29 @@ const AddModal = ({ onClose, onCreated }) => {
     if (!content.trim() && !imageFile) return;
 
     try {
+
+      const formData = new FormData();
+      formData.append("content", content);
+      if (imageFile) {
+        formData.append("image", imageFile);
+      }
+
+      const token = localStorage.getItem("token"); 
+
+      const res = await API.post(
+        "api/posts/", 
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      console.log("Post created:", res.data);
+      alert("Post created successfully!");
+
       const token = localStorage.getItem("token");
       const fd = new FormData();
       fd.append("content", content);
@@ -51,6 +93,7 @@ const AddModal = ({ onClose, onCreated }) => {
       // return new post to Feeds & close modal
       onCreated?.(res.data);
       onClose?.();
+
       setContent("");
       setImageFile(null);
       setPreviewUrl("");

@@ -8,9 +8,9 @@ import WorkIcon from '@mui/icons-material/Work';
 import WorkHistoryIcon from '@mui/icons-material/WorkHistory';
 import { useLocation } from 'react-router-dom';
 
-const Navbar2 = ({onLogout}) => {
+const Navbar2 = ({ onLogout }) => {
     const [dropdown, setdropdown] = useState(false);
-    
+
     return (
         <div className='bg-white h-13 flex justify-between py-1 px-5 xl:px-50 ficed top-0 w-[100%] z-1000'>
             <div className='flex gap-2 items-center'>
@@ -21,7 +21,7 @@ const Navbar2 = ({onLogout}) => {
                     <input className='searchInput w-70 bg-gray-100 rounded-sm h-10 px-4' placeholder='Search' />
 
                     {
-                        dropdown && 
+                        dropdown &&
                         <div className='absolute w-88 left-0 bg-gray-200'>
                             <div className='flex gap-2 mb-1 items-center cursor-pointer '>
                                 <div><img className='w-10 h-10 rounded-full' src={'https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/480px-User_icon_2.svg.png'} /></div>
@@ -34,36 +34,38 @@ const Navbar2 = ({onLogout}) => {
 
             <div className='hidden gap-10 md:flex'>
                 <Link to={'/Home'} className='flex flex-col items-center cursor-pointer'>
-                    <HomeIcon sx={{color:'grey'}} />
+                    <HomeIcon sx={{ color: 'grey' }} />
                     <div className='text-sm text-gray-500'>Home</div>
                 </Link>
 
                 <Link to={'/Messages'} className='flex flex-col items-center cursor-pointer'>
-                    <ChatIcon sx={{color:'grey'}}/>
+                    <ChatIcon sx={{ color: 'grey' }} />
                     <div className='text-sm text-gray-500'>Chatbox</div>
                 </Link>
 
-                <Link to={'/Resume'} className='flex flex-col items-center cursor-pointer'>
+                {/* <Link to={'/Resume'} className='flex flex-col items-center cursor-pointer'>
                     <WorkIcon sx={{color:'grey'}}/>
                     <div className='text-sm text-gray-500'>Resume</div>
-                </Link>
+                </Link> */}
 
                 <Link to={'/Jobs'} className='flex flex-col items-center cursor-pointer'>
-                    <WorkHistoryIcon sx={{color:'grey'}}/>
+                    <WorkHistoryIcon sx={{ color: 'grey' }} />
                     <div className='text-sm text-gray-500'>Jobs</div>
                 </Link>
 
                 <Link to={'/Profile'} className='flex flex-col items-center cursor-pointer'>
-                    <PersonIcon sx={{color:'grey'}}/>
+                    <PersonIcon sx={{ color: 'grey' }} />
                     <div className='text-sm text-gray-500'>My Profile</div>
                 </Link>
             </div>
             <button
-             onClick={onLogout}
-           className="bg-red-500 hover:bg-black-600 text-white font-semibold py-2 px-6 rounded-full shadow-md transition-all duration-300 ease-in-out transform hover:scale-105"
+                onClick={onLogout}
+                className="bg-red-500 hover:bg-black-600 text-white font-semibold py-2 px-6 rounded-full shadow-md transition-all duration-300 ease-in-out transform hover:scale-105"
             >
-           Logout
-           </button>
+                Logout
+            </button>
+
+
 
         </div>
     )
