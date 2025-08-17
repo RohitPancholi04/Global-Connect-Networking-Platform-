@@ -55,10 +55,10 @@ const ProfileCard = () => {
         </div>
       </div>
       <div className="p-5">
-        <div className="text-xl">{profile.name}</div>
-        <div className="text-sm my-1">{profile.bio || "No bio"}</div>
-        <div className="text-sm my-1">{profile.location || "Location not set"}</div>
-        <div className="text-sm my-1">{profile.company || "No company"}</div>
+        <div className="text-xl">{profile.name || "Dummy User"}</div>
+        {/* <div className="text-sm my-1">{profile.job || "Dummy job"}</div> */}
+        <div className="text-sm my-1">{profile.location || "Dummy not set"}</div>
+        <div className="text-sm my-1">{profile.company || "Dummy company"}</div>
       </div>
     </Card>
   );
