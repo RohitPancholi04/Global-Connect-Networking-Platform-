@@ -14,6 +14,7 @@ const ProfileCard = () => {
         return;
       }
 
+      ////
       // Decode token to get userId
       const decoded = jwtDecode(token);
       const userId = decoded.id; 
