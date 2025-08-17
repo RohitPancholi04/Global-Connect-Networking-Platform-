@@ -1,54 +1,23 @@
-// import React from 'react'
-// import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
 
-// const AddModal = () => {
-
-//   return (
-//     <div>
-//       <div className='flex gap-4 items-center'>
-//         <div className='relative'>
-//             <img className='w-15 h-15 rounded-full' alt='Img' 
-//             src={'https://static.vecteezy.com/system/resources/previews/000/439/863/non_2x/vector-users-icon.jpg'}/>
-//         </div>
-//         <div className='text-2xl'>User 1</div>
-//       </div>
-
-//       <div>
-//         <textarea cols={50} rows={5} placeholder="What do you want to talk about?" className='my-3 outline-0 text-xl p-2'></textarea>
-//       </div>
-//       <div>
-//         <img className='w-20 h-20 rounded-xl ' src='https://www.researchgate.net/publication/301228264/figure/fig1/AS:350333063712768@1460537319812/Social-media-networks-Sourcehttp-wwwcyberneticsltdcom-services-w.png' />
-//       </div>
-
-//       <div className='flex justify-between'>
-//         <div className='my-2'>
-//             <label className='cursor-pointer ' htmlFor='inputFile'><InsertPhotoIcon sx={{color:"green"}}/></label>
-//             <input type='file' className='hidden' id='inputFile' />
-//         </div>
-//         <div className='bg-blue-950 text-white py-1 px-3 cursor-pointer rounded-2xl h-fit items-center'>Post</div>
-//       </div>
-//     </div>
-//   )
-// }
-
-// export default AddModal
-
-
-import  { useState } from "react";
+import { useEffect, useState } from "react";
 import InsertPhotoIcon from "@mui/icons-material/InsertPhoto";
-import API from "../lib/axios"; 
 import { useEffect } from "react";
 import {jwtDecode} from "jwt-decode"; 
+import api from "../lib/axios";
+import { jwtDecode } from "jwt-decode";
 
-const AddModal = () => {
+
+const AddModal = ({ onClose, onCreated }) => {
   const [profile, setProfile] = useState(null);
-   const [content, setContent] = useState("");
+  const [content, setContent] = useState("");
   const [imageFile, setImageFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState("");
-  
-    const getUserProfile = async () => {
+
+  useEffect(() => {
+    (async () => {
       try {
         const token = localStorage.getItem("token");
+
         if (!token) {
           console.error("No token found");
           return;
@@ -62,40 +31,31 @@ const AddModal = () => {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        });
-  
-        setProfile(res.data);
-      } catch (error) {
-        console.error("Error fetching profile:", error);
-      }
-    };
-  
-    useEffect(() => {
-      getUserProfile();
-    }, []);
-  
-    if (!profile) {
-      return <div>Loading...</div>;
-    }
- 
 
-  // Handle file select
+        if (!token) return;
+        const { id } = jwtDecode(token);
+        const res = await api.get(`/api/users/${id}`, {
+          headers: { Authorization: `Bearer ${token}` },
+
+        });
+        setProfile(res.data);
+      } catch (e) {
+        console.error("Profile load failed", e);
+      }
+    })();
+  }, []);
+
   const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    setImageFile(file);
-    if (file) {
-      setPreviewUrl(URL.createObjectURL(file));
-    }
+    const f = e.target.files[0];
+    setImageFile(f || null);
+    setPreviewUrl(f ? URL.createObjectURL(f) : "");
   };
 
-  // Handle post submit
   const handlePost = async () => {
-    if (!content && !imageFile) {
-      alert("Please enter content or select an image.");
-      return;
-    }
+    if (!content.trim() && !imageFile) return;
 
     try {
+
       const formData = new FormData();
       formData.append("content", content);
       if (imageFile) {
@@ -117,69 +77,78 @@ const AddModal = () => {
 
       console.log("Post created:", res.data);
       alert("Post created successfully!");
+
+      const token = localStorage.getItem("token");
+      const fd = new FormData();
+      fd.append("content", content);
+      if (imageFile) fd.append("image", imageFile);
+
+      const res = await api.post(`/api/posts`, fd, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      // return new post to Feeds & close modal
+      onCreated?.(res.data);
+      onClose?.();
+
       setContent("");
       setImageFile(null);
       setPreviewUrl("");
-    } catch (error) {
-      console.error("Error creating post:", error);
-      alert("Failed to create post.");
+    } catch (e) {
+      console.error("Create post failed", e);
+      alert("Failed to create post");
     }
   };
 
+  if (!profile) return <div className="p-4">Loading…</div>;
+
   return (
     <div>
-      {/* User Info */}
+      {/* User */}
       <div className="flex gap-4 items-center">
-        <div className="relative">
-          <img
-            className="w-15 h-15 rounded-full"
-            alt="User"
-            src={
-              profile.profilePic
-            }
-          />
-        </div>
-        <div className="text-2xl">{profile.name}</div>
+        <img
+          className="w-14 h-14 rounded-full object-cover"
+          alt="User"
+          src={profile.profilePic}
+        />
+        <div className="text-xl font-semibold">{profile.name}</div>
       </div>
 
       {/* Textarea */}
-      <div>
+      <div className="mt-3">
         <textarea
-          cols={50}
           rows={5}
           placeholder="What do you want to talk about?"
-          className="my-3 outline-0 text-xl p-2 w-full border rounded"
+          className="w-full border rounded p-3 text-base outline-none"
           value={content}
           onChange={(e) => setContent(e.target.value)}
-        ></textarea>
+        />
       </div>
 
-      {/* Image Preview */}
+      {/* Preview */}
       {previewUrl && (
-        <div>
-          <img className="w-20 h-20 rounded-xl" src={previewUrl} alt="Preview" />
+        <div className="mt-3">
+          <img src={previewUrl} className="max-h-56 rounded-xl" />
         </div>
       )}
 
       {/* Actions */}
-      <div className="flex justify-between">
-        <div className="my-2">
-          <label className="cursor-pointer" htmlFor="inputFile">
-            <InsertPhotoIcon sx={{ color: "green" }} />
-          </label>
-          <input
-            type="file"
-            className="hidden"
-            id="inputFile"
-            onChange={handleFileChange}
-          />
-        </div>
-        <div
+      <div className="flex justify-between items-center mt-4">
+        <label className="cursor-pointer flex items-center gap-2">
+          <InsertPhotoIcon />
+          <span>Add photo</span>
+          <input id="inputFile" type="file" className="hidden" onChange={handleFileChange} />
+        </label>
+
+        <button
           onClick={handlePost}
-          className="bg-blue-950 text-white py-1 px-3 cursor-pointer rounded-2xl h-fit items-center"
+          className="bg-blue-900 text-white px-4 py-2 rounded-2xl"
         >
           Post
-        </div>
+        </button>
       </div>
     </div>
   );
