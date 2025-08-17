@@ -20,6 +20,7 @@ const Login = ({ setIsLogin }) => {
 
       if (res.data.token) {
         localStorage.setItem("token", res.data.token);
+        localStorage.setItem("userData", res.data);
         alert("Login successful!");
         setIsLogin(true);
         navigate("/Home"); // Redirect to homepage or feeds

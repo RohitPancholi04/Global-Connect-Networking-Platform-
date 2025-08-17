@@ -5,6 +5,7 @@ const userSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   bio: { type: String, default: '' },
+  job: { type: String, default: '' },
   skills: { type: [String], default: [] },
   location: { type: String, default: '' },
   profilePic: { type: String, default: 'https://tse3.mm.bing.net/th/id/OIP.1waDZ8Q2eWBkenMscI08qAHaHa?pid=Api&P=0&h=180' },

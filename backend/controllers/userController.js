@@ -14,14 +14,37 @@ exports.getUserProfile = async (req, res) => {
 
 // Update profile
 exports.updateProfile = async (req, res) => {
-    
   try {
-    // const imageUrl = req.file ? await connectCloudinary().uploader.upload(req.file.path) : "";
-    const updates = req.body;
-    const user = await User.findByIdAndUpdate(req.user._id, updates, { new: true }).select('-password');
-    res.json(user);
+    let imageUrl = "";
+
+    // If file uploaded → upload to Cloudinary
+    if (req.file) {
+      const cloudinary = connectCloudinary();
+      const result = await cloudinary.uploader.upload(req.file.path, {
+        folder: "linkedin-clone/profiles"
+      });
+      imageUrl = result.secure_url;
+    }
+
+    // Gather fields from req.body
+    const updates = { ...req.body };
+    if (imageUrl) updates.profilePic = imageUrl;
+
+    // Update user profile
+    const updatedUser = await User.findByIdAndUpdate(
+      req.user._id,   // from protect middleware
+      { $set: updates },
+      { new: true, runValidators: true }
+    ).select("-password");
+
+    res.status(200).json({
+      success: true,
+      message: "Profile updated successfully",
+      user: updatedUser,
+    });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.error("Update Profile Error:", error);
+    res.status(500).json({ success: false, message: "Server error" });
   }
 };
 

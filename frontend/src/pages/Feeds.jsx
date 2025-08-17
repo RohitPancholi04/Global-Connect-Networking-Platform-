@@ -75,10 +75,10 @@ const Feeds = () => {
         {/* Create prompt */}
         <Card padding={1}>
           <div className="flex gap-2 items-center">
-            <img
+            {/* <img
               src="https://static.vecteezy.com/system/resources/previews/000/439/863/non_2x/vector-users-icon.jpg"
               className="rounded-full w-12 h-12 border-2 border-white"
-            />
+            /> */}
             <div
               onClick={openAdd}
               className="w-full border py-3 px-3 rounded-3xl hover:bg-gray-100 cursor-pointer"
