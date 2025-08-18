@@ -11,7 +11,7 @@ connectCloudinary();
 
 
 //Middleware 
-app.use(cors({origin: "http://localhost:5003", credentials: true}));
+app.use(cors({origin: "https://global-connect-networking-platform-ltta.onrender.com", credentials: true}));
 app.use(express.json({ limit: "10mb" }));
 
 // Routes
