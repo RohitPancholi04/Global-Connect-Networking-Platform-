@@ -2,7 +2,7 @@ import axios from "axios";
 
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_BACKEND_URL || "http://localhost:5003",
+  baseURL: import.meta.env.VITE_BACKEND_URL || "https://global-connect-networking-platform.onrender.com",
   withCredentials: true 
 });
 
