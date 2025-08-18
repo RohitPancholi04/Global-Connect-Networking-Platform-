@@ -1,5 +1,5 @@
 import { useState } from "react";
-import API from "../lib/axios";
+import api from "../lib/axios";
 import { useNavigate } from "react-router-dom";
 
 function JobCreatePage() {
@@ -13,7 +13,7 @@ function JobCreatePage() {
     e.preventDefault();
 
     try {
-      const res = await API.post("/jobs/create", {
+      const res = await api.post("/jobs/create", {
         title,
         description,
         skills: skills.split(",").map((s) => s.trim()), 
