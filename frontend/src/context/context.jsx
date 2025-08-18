@@ -15,7 +15,7 @@ export const UserProvider = ({ children }) => {
     try {
         setLoading(true)
       const token = localStorage.getItem("token");
-      const res = await api.put("/update", formData, {
+      const res = await api.put("/api/users/update", formData, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
