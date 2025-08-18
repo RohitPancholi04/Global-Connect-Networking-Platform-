@@ -13,7 +13,7 @@ function JobCreatePage() {
     e.preventDefault();
 
     try {
-      const res = await api.post("/jobs/create", {
+      const res = await api.post("/api/jobs/create", {
         title,
         description,
         skills: skills.split(",").map((s) => s.trim()), 
