@@ -155,7 +155,7 @@ function JobPage() {
   // Fetch all jobs
   const fetchJobs = async () => {
     try {
-      const res = await api.get("/jobs");
+      const res = await api.get("/api/jobs");
       setJobs(res.data);
       setLoading(false);
     } catch (err) {
@@ -167,7 +167,7 @@ function JobPage() {
   // Apply to job
   const applyJob = async (id) => {
     try {
-      await api.post(`/jobs/${id}/apply`);
+      await api.post(`/api/jobs/${id}/apply`);
       alert("Applied successfully!");
       fetchJobs(); // refresh
     } catch (err) {
@@ -178,7 +178,7 @@ function JobPage() {
   // Save job
   const saveJob = async (id) => {
     try {
-      await api.post(`/jobs/${id}/save`);
+      await api.post(`/api/jobs/${id}/save`);
       alert("Job saved successfully!");
       fetchJobs();
     } catch (err) {
@@ -189,7 +189,7 @@ function JobPage() {
   // Close job
   const closeJob = async (id) => {
     try {
-      await api.put(`/jobs/${id}/close`);
+      await api.put(`/api/jobs/${id}/close`);
       alert("Job closed successfully!");
       fetchJobs();
     } catch (err) {

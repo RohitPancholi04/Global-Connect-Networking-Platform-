@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect } from "react";
-import axios from "axios";
+import api from "../lib/axios.js";
 
 // Create Context
 export const UserContext = createContext();
@@ -15,7 +15,7 @@ export const UserProvider = ({ children }) => {
     try {
         setLoading(true)
       const token = localStorage.getItem("token");
-      const res = await axios.put("https://global-connect-networking-platform.onrender.com/api/users/update", formData, {
+      const res = await api.put("/update", formData, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
