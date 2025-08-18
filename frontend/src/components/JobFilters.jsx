@@ -32,7 +32,7 @@
 
 
 import { useEffect, useState } from "react";
-import API from "../lib/axios";
+import api from "../lib/axios";
 
 function JobFilters() {
   const [jobs, setJobs] = useState([]);
@@ -42,7 +42,7 @@ function JobFilters() {
 
   const fetchJobs = async () => {
     try {
-      const res = await API.get("/jobs/filter", {
+      const res = await api.get("/jobs/filter", {
         params: {
           location,
           skills,
