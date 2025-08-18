@@ -15,7 +15,7 @@ export const UserProvider = ({ children }) => {
     try {
         setLoading(true)
       const token = localStorage.getItem("token");
-      const res = await axios.put("http://localhost:5003/api/users/update", formData, {
+      const res = await axios.put("https://global-connect-networking-platform.onrender.com/api/users/update", formData, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
