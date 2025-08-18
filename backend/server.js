@@ -11,7 +11,7 @@ connectCloudinary();
 
 
 //Middleware 
-app.use(cors({"https://global-connect-networking-platform-wb80.onrender.com", credentials: true});
+app.use(cors({"https://global-connect-networking-platform-wb80.onrender.com", credentials: true}));
 app.use(express.json({ limit: "10mb" }));
 
 // Routes
