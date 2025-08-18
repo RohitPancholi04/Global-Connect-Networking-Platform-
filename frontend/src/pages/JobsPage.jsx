@@ -144,7 +144,7 @@
 
 
 import { useEffect, useState } from "react";
-import API from "../lib/axios"; // Adjust the import based on your project structure
+import api from "../lib/axios"; // Adjust the import based on your project structure
 import { useNavigate } from "react-router-dom";
 
 function JobPage() {
